@@ -1,28 +1,13 @@
 #include <iostream>
 #include <unistd.h>
+#include <memory>
 
-#include "rpsw_event_handler.h"
-#include "rpsw_phalanx_res.h"
 #include "Poco/Thread.h"
 #include "Poco/RunnableAdapter.h"
 
-static void* rpsw_event_handler(void* args)
-{
-    std::cout<<"This is event_handler."<<std::endl;
-
-    rpsw_event_handler_c* p_evnt_hdlr=(rpsw_event_handler_c*)args;
-    p_evnt_hdlr->run();
-
-    return NULL;
-}
-
-static void* rpsw_fault_scanner(void* args)
-{
-    std::cout<<"This is fault_scanner."<<std::endl;
-    sleep(5);
-
-    return NULL;
-}
+#include "rpsw_event_handler.h"
+#include "rpsw_fault_scanner.h"
+#include "rpsw_phalanx_res.h"
 
 cmm_hw_res* get_hw_res(const std::string& name)
 {
@@ -40,6 +25,7 @@ int main()
     std::cout<<"This is rpswd."<<std::endl;
 
     cmm_hw_res* hw=get_hw_res("phalanx");
+    std::auto_ptr<cmm_hw_res> hw1(hw);
 
     rpsw_event_handler_c evnt_hdlr;
     evnt_hdlr.init(hw);
@@ -47,13 +33,12 @@ int main()
     Poco::Thread evnt_hdlr_thrd;
     evnt_hdlr_thrd.start(runnable);
 
-    pthread_t fault_scanner_thread;
-    pthread_create(&fault_scanner_thread, NULL, rpsw_fault_scanner, NULL);
+    rpsw_fault_scanner fault_scanner(hw);
+    Poco::Thread fault_scan_thrd;
+    fault_scan_thrd.start(fault_scanner);
 
     evnt_hdlr_thrd.join();
-    pthread_join(fault_scanner_thread, NULL);
-
-    delete hw;
+    fault_scan_thrd.join();
 
     return 0;
 }

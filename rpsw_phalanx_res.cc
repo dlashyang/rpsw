@@ -32,4 +32,4 @@ int phalanx_hw_res::get_thermal_readout(uint8_t id, int32_t& readout)
 phalanx_hw_res::~phalanx_hw_res()
 {
     std::cout<<"~phalanx_hw_res"<<std::endl;
-};
+}
