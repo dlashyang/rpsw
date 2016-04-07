@@ -1,9 +1,7 @@
 #ifndef RPSW_EVENT_HANDLER_H
 #define RPSW_EVENT_HANDLER_H
 
-class cmm_hw_res
-{
-};
+#include "rpsw_common_hw_res.h"
 
 class rpsw_event_handler_c
 {
@@ -16,4 +14,4 @@ class rpsw_event_handler_c
         void* run();
 };
 
-#endif
+#endif //#ifndef RPSW_EVENT_HANDLER_H
