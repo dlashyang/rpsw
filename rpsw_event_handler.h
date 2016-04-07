@@ -11,7 +11,7 @@ class rpsw_event_handler_c
     public:
         rpsw_event_handler_c():_hw_res(NULL){};
         int init(cmm_hw_res* p_res);
-        void* run();
+        void run();
 };
 
 #endif //#ifndef RPSW_EVENT_HANDLER_H

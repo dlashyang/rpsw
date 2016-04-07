@@ -1,9 +1,10 @@
 #include <iostream>
 #include <unistd.h>
-#include <pthread.h>
 
 #include "rpsw_event_handler.h"
 #include "rpsw_phalanx_res.h"
+#include "Poco/Thread.h"
+#include "Poco/RunnableAdapter.h"
 
 static void* rpsw_event_handler(void* args)
 {
@@ -39,15 +40,17 @@ int main()
     std::cout<<"This is rpswd."<<std::endl;
 
     cmm_hw_res* hw=get_hw_res("phalanx");
+
     rpsw_event_handler_c evnt_hdlr;
     evnt_hdlr.init(hw);
-    pthread_t event_handler_thread;
-    pthread_create(&event_handler_thread, NULL, rpsw_event_handler, (void*)&evnt_hdlr);
+    Poco::RunnableAdapter<rpsw_event_handler_c> runnable(evnt_hdlr, &rpsw_event_handler_c::run);
+    Poco::Thread evnt_hdlr_thrd;
+    evnt_hdlr_thrd.start(runnable);
 
     pthread_t fault_scanner_thread;
     pthread_create(&fault_scanner_thread, NULL, rpsw_fault_scanner, NULL);
 
-    pthread_join(event_handler_thread, NULL);
+    evnt_hdlr_thrd.join();
     pthread_join(fault_scanner_thread, NULL);
 
     delete hw;
