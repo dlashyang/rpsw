@@ -14,7 +14,9 @@ cmm_hw_res* get_hw_res(const std::string& name)
     std::cout<<"hardware is "<<name<<std::endl;
 
     if (name=="phalanx") {
-        return (new phalanx_hw_res());
+        phalanx_hw_res* phalan=new phalanx_hw_res();
+        phalan->init("phalanx.txt");
+        return (dynamic_cast<cmm_hw_res*>(phalan));
     } else {
         return NULL;
     }
@@ -25,7 +27,7 @@ int main()
     std::cout<<"This is rpswd."<<std::endl;
 
     cmm_hw_res* hw=get_hw_res("phalanx");
-    std::auto_ptr<cmm_hw_res> hw1(hw);
+    std::auto_ptr<cmm_hw_res> _hw_just_for_gc(hw);
 
     rpsw_event_handler_c evnt_hdlr;
     evnt_hdlr.init(hw);
