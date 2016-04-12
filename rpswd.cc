@@ -39,6 +39,11 @@ int main()
     Poco::Thread fault_scan_thrd;
     fault_scan_thrd.start(fault_scanner);
 
+    //for debug
+    int i;
+    std::cin>>i;
+    fault_scanner.stop();
+
     evnt_hdlr_thrd.join();
     fault_scan_thrd.join();
 
