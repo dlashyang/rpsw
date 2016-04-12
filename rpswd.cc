@@ -15,7 +15,7 @@ cmm_hw_res* get_hw_res(const std::string& name)
 
     if (name=="phalanx") {
         phalanx_hw_res* phalan=new phalanx_hw_res();
-        phalan->init("phalanx.txt");
+        phalan->init("phalanx");
         return (dynamic_cast<cmm_hw_res*>(phalan));
     } else {
         return NULL;
