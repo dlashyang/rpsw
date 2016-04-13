@@ -56,9 +56,9 @@ int phalanx_hw_res::get_card_status(uint32_t& card_status)
 int phalanx_hw_res::get_volt_readout(uint8_t id, int32_t& readout)
 {
     Poco::Timestamp::TimeDiff elapsed=_start_timer.elapsed();
-    readout=_dummy_vol[elapsed/1000];
+    readout=_dummy_vol[elapsed/1000000];
 
-    std::cout<<"time is "<<(elapsed/1000)<<", readout is "<<readout<<std::endl;
+    std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<readout<<std::endl;
 
     return 0;
 }
@@ -66,9 +66,9 @@ int phalanx_hw_res::get_volt_readout(uint8_t id, int32_t& readout)
 int phalanx_hw_res::get_thermal_readout(uint8_t id, int32_t& readout)
 {
     Poco::Timestamp::TimeDiff elapsed=_start_timer.elapsed();
-    readout=_dummy_temp[elapsed/1000];
+    readout=_dummy_temp[elapsed/1000000];
 
-    std::cout<<"time is "<<(elapsed/1000)<<", readout is "<<readout<<std::endl;
+    std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<readout<<std::endl;
 
     return 0;
 }
