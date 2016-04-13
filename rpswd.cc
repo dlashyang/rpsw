@@ -31,9 +31,7 @@ int main()
 
     rpsw_event_handler_c evnt_hdlr;
     evnt_hdlr.init(hw);
-    Poco::RunnableAdapter<rpsw_event_handler_c> runnable(evnt_hdlr, &rpsw_event_handler_c::run);
-    Poco::Thread evnt_hdlr_thrd;
-    evnt_hdlr_thrd.start(runnable);
+    evnt_hdlr.start();
 
     rpsw_fault_scanner fault_scanner(hw);
     Poco::Thread fault_scan_thrd;
@@ -43,8 +41,8 @@ int main()
     int i;
     std::cin>>i;
     fault_scanner.stop();
+    evnt_hdlr.stop();
 
-    evnt_hdlr_thrd.join();
     fault_scan_thrd.join();
 
     return 0;
