@@ -3,6 +3,11 @@
 
 #include "simple_msg_dispatcher.h"
 
+simple_msg_dispatcher::~simple_msg_dispatcher()
+{
+    std::cout<<"~simple_msg_dispatcher"<<std::endl;
+}
+
 int simple_msg_dispatcher::proc_msg(const std::string& msg, std::string& reply)
 {
     if (_res == NULL) {

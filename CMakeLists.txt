@@ -7,6 +7,6 @@ ADD_DEFINITIONS(
     -Wall
     )
 
-ADD_EXECUTABLE(rpswd rpswd.cc rpsw_event_handler.cc rpsw_phalanx_res.cc rpsw_fault_scanner.cc poco_tcp_server.cc simple_msg_dispatcher.cc)
+ADD_EXECUTABLE(rpswd rpswd.cc rpsw_dummy_res.cc rpsw_fault_scanner.cc poco_tcp_server.cc simple_msg_dispatcher.cc)
 
 TARGET_LINK_LIBRARIES(rpswd pthread /usr/local/lib/libPocoFoundation.30.dll.a /usr/local/lib/libPocoNet.30.dll.a)

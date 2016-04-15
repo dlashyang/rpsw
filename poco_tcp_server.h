@@ -46,4 +46,17 @@ class CmspPocoServer: public rpsw_event_server
         Poco::Net::ServerSocket _ss;
 };
 
+class poco_server_factory: public rpsw_server_factory
+{
+    public:
+        poco_server_factory(rpsw_msg_dispatcher* p):_dsp(p) {};
+        virtual rpsw_event_server* create_server()
+        {
+            return (new CmspPocoServer(_dsp));
+        };
+
+    private:
+        rpsw_msg_dispatcher* _dsp;
+};
+
 #endif //#ifndef POCO_TCP_SERVER_H
