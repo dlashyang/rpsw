@@ -29,7 +29,7 @@ int main()
     cmm_hw_res* hw=get_hw_res("phalanx");
     std::auto_ptr<cmm_hw_res> _hw_just_for_gc(hw);
 
-    rpsw_event_handler_c evnt_hdlr;
+    rpsw_event_handler evnt_hdlr;
     evnt_hdlr.init(hw);
     evnt_hdlr.start();
 
