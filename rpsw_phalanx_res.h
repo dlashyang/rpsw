@@ -4,7 +4,7 @@
 #include <vector>
 #include <stdint.h>
 
-#include <Poco/timestamp.h>
+#include <Poco/Timestamp.h>
 
 #include "rpsw_common_hw_res.h"
 

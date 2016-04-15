@@ -1,6 +1,8 @@
 #ifndef RPSW_COMMON_HW_RES_H
 #define RPSW_COMMON_HW_RES_H
 
+#include <stdint.h>
+
 class cmm_hw_res
 {
     public:
