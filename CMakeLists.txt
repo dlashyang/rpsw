@@ -7,7 +7,7 @@ ADD_DEFINITIONS(
     -Wall
     )
 
-ADD_EXECUTABLE(rpswd rpswd.cc rpsw_event_handler.cc rpsw_phalanx_res.cc rpsw_fault_scanner.cc poco_tcp_server.cc simple_msg_dispatcher.cc)
+ADD_EXECUTABLE(rpswd rpswd.cc rpsw_dummy_res.cc rpsw_fault_scanner.cc poco_tcp_server.cc simple_msg_dispatcher.cc)
 
 LINK_DIRECTORIES(/usr/local/lib)
 

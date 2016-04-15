@@ -35,6 +35,7 @@ int CmspPocoServer::init()
     if(_dsp != NULL) {
         _srv=new Poco::Net::TCPServer(new CmspServerConnectionFactory(_dsp), _ss);
     } else {
+        std::cout<<"No valid dispatcher"<<std::endl;
         ret = -1;
     }
 
