@@ -43,10 +43,17 @@ int CmspPocoServer::init()
 
 void CmspPocoServer::start()
 {
+    if (_srv == NULL) {
+        std::cout<<"No valid TCP server"<<std::endl;
+        return;
+    }
+
     _srv->start();
 }
 
 void CmspPocoServer::stop()
 {
-    _srv->stop();
+    if (_srv != NULL) {
+        _srv->stop();
+    }
 }

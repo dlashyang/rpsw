@@ -21,6 +21,7 @@ int rpsw_event_handler::init(cmm_hw_res* p_res)
     _res=p_res;
     //need a seperated method later
     _srv=new CmspPocoServer(new simple_msg_dispatcher(_res));
+    _srv->init();
 
     return 0;
 }
