@@ -5,7 +5,6 @@
 #include "Poco/Thread.h"
 #include "Poco/RunnableAdapter.h"
 
-#include "rpsw_event_handler.h"
 #include "rpsw_fault_scanner.h"
 
 #include "rpsw_dummy_res.h"

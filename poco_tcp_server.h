@@ -7,6 +7,7 @@
 #include "Poco/Net/StreamSocket.h"
 
 #include "rpsw_event_server.h"
+#include "rpsw_msg_dispatcher.h"
 
 class CmspServerConnection: public Poco::Net::TCPServerConnection
 {

@@ -1,8 +1,7 @@
 #ifndef SIMPLE_MSG_DISPATCHER_H
 #define SIMPLE_MSG_DISPATCHER_H
 
-#include <string>
-#include "rpsw_event_server.h"
+#include "rpsw_msg_dispatcher.h"
 #include "rpsw_common_hw_res.h"
 
 class simple_msg_dispatcher: public rpsw_msg_dispatcher
