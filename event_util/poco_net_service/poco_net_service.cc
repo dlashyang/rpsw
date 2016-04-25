@@ -1,6 +1,6 @@
 #include <iostream>
 #include <sstream>
-#include "poco_tcp_server.h"
+#include "poco_net_service.h"
 
 void CmspServerConnection::run()
 {

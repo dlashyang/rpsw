@@ -5,7 +5,7 @@
 #include "rpsw_fault_scanner.h"
 
 #include "rpsw_dummy_res.h"
-#include "poco_tcp_server.h"
+#include "poco_net_service.h"
 #include "simple_msg_dispatcher.h"
 
 int main()

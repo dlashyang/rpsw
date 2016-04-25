@@ -11,7 +11,7 @@ include_directories(
     include
     msg_disp/include
     hw_res/include
-    event_srv/include
+    event_util/include
     )
 
 add_executable(rpswd rpswd.cc rpsw_fault_scanner.cc)
@@ -21,10 +21,10 @@ find_library(poco_f PocoFoundation /usr/local)
 target_link_libraries(rpswd 
     dummy_res 
     simple_msg_disp
-    poco_srv
+    poco_srvc
     ${poco_f} 
     )
 
-add_subdirectory(event_srv/poco_tcp_srv)
+add_subdirectory(event_util/poco_net_service)
 add_subdirectory(msg_disp/simple_msg_disp)
 add_subdirectory(hw_res/dummy_res)
