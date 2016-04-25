@@ -2,9 +2,6 @@
 #include <unistd.h>
 #include <memory>
 
-#include "Poco/Thread.h"
-#include "Poco/RunnableAdapter.h"
-
 #include "rpsw_fault_scanner.h"
 
 #include "rpsw_dummy_res.h"
@@ -33,16 +30,13 @@ int main()
     evnt_srv->start();
 
     rpsw_fault_scanner fault_scanner(hw);
-    Poco::Thread fault_scan_thrd;
-    fault_scan_thrd.start(fault_scanner);
+    fault_scanner.start();
 
     //for debug
     int i;
     std::cin>>i;
     fault_scanner.stop();
     evnt_srv->stop();
-
-    fault_scan_thrd.join();
 
     return 0;
 }

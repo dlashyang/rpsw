@@ -3,15 +3,24 @@
 
 #include "Poco/Net/DatagramSocket.h"
 #include "Poco/Net/SocketAddress.h"
-//#include "Poco/Net/SocketStream.h"
 
 #include "rpsw_fault_scanner.h"
 
 rpsw_fault_scanner::~rpsw_fault_scanner()
 {
-    if(_hw_res != NULL) {
-        _hw_res=NULL;
-    }
+    std::cout<<"~rpsw_fault_scanner"<<std::endl;
+}
+
+void rpsw_fault_scanner::start()
+{
+    _stop=false;
+    _thrd.start(*this);
+}
+
+void rpsw_fault_scanner::stop()
+{
+    _stop=true;
+    _thrd.join();
 }
 
 void rpsw_fault_scanner::run()
