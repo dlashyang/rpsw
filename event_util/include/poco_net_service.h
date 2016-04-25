@@ -9,34 +9,34 @@
 #include "rpsw_event_server.h"
 #include "rpsw_msg_dispatcher.h"
 
-class CmspServerConnection: public Poco::Net::TCPServerConnection
+class poco_srv_connection: public Poco::Net::TCPServerConnection
 {
     public:
-        CmspServerConnection(const Poco::Net::StreamSocket& s,rpsw_msg_dispatcher* p): Poco::Net::TCPServerConnection(s), _dsp(p) {};
+        poco_srv_connection(const Poco::Net::StreamSocket& s,rpsw_msg_dispatcher* p): Poco::Net::TCPServerConnection(s), _dsp(p) {};
         void run();
 
     private:
         rpsw_msg_dispatcher* _dsp;
 };
 
-class CmspServerConnectionFactory: public Poco::Net::TCPServerConnectionFactory
+class poco_srv_con_factory: public Poco::Net::TCPServerConnectionFactory
 {
     public:
-        CmspServerConnectionFactory(rpsw_msg_dispatcher* p): _dsp(p){};
+        poco_srv_con_factory(rpsw_msg_dispatcher* p): _dsp(p){};
         Poco::Net::TCPServerConnection* createConnection(const Poco::Net::StreamSocket& socket)
         {
-            return new CmspServerConnection(socket, _dsp);
+            return new poco_srv_connection(socket, _dsp);
         }
 
     private:
         rpsw_msg_dispatcher* _dsp;
 };
 
-class CmspPocoServer: public rpsw_event_server
+class cmsp_poco_server: public rpsw_event_server
 {
     public:
-        CmspPocoServer(rpsw_msg_dispatcher* p, int port=9911):_srv(NULL),_dsp(p),_ss(port){};
-        virtual ~CmspPocoServer();
+        cmsp_poco_server(rpsw_msg_dispatcher* p, int port=9911):_srv(NULL),_dsp(p),_ss(port){};
+        virtual ~cmsp_poco_server();
         virtual int init();
         virtual void start();
         virtual void stop();
@@ -53,7 +53,7 @@ class poco_server_factory: public rpsw_server_factory
         poco_server_factory(rpsw_msg_dispatcher* p):_dsp(p) {};
         virtual rpsw_event_server* create_server()
         {
-            return (new CmspPocoServer(_dsp));
+            return (new cmsp_poco_server(_dsp));
         };
 
     private:

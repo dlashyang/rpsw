@@ -2,7 +2,7 @@
 #include <sstream>
 #include "poco_net_service.h"
 
-void CmspServerConnection::run()
+void poco_srv_connection::run()
 {
     if (_dsp == NULL) {
         std::cout<<"No valid message dispatcher!"<<std::endl;
@@ -21,19 +21,19 @@ void CmspServerConnection::run()
     socket().sendBytes(reply.data(), (int)reply.length());
 }
 
-CmspPocoServer::~CmspPocoServer()
+cmsp_poco_server::~cmsp_poco_server()
 {
     if (_dsp != NULL) {
         delete _dsp;
     }
 }
 
-int CmspPocoServer::init()
+int cmsp_poco_server::init()
 {
     int ret = 0;
 
     if(_dsp != NULL) {
-        _srv=new Poco::Net::TCPServer(new CmspServerConnectionFactory(_dsp), _ss);
+        _srv=new Poco::Net::TCPServer(new poco_srv_con_factory(_dsp), _ss);
     } else {
         std::cout<<"No valid dispatcher"<<std::endl;
         ret = -1;
@@ -42,7 +42,7 @@ int CmspPocoServer::init()
     return ret;
 }
 
-void CmspPocoServer::start()
+void cmsp_poco_server::start()
 {
     if (_srv == NULL) {
         std::cout<<"No valid TCP server"<<std::endl;
@@ -52,7 +52,7 @@ void CmspPocoServer::start()
     _srv->start();
 }
 
-void CmspPocoServer::stop()
+void cmsp_poco_server::stop()
 {
     if (_srv != NULL) {
         _srv->stop();
