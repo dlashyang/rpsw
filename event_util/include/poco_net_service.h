@@ -36,7 +36,7 @@ class cmsp_poco_server: public rpsw_event_server
 {
     public:
         cmsp_poco_server(rpsw_msg_dispatcher* p, int port=9911):_srv(NULL),_dsp(p),_ss(port){};
-        virtual ~cmsp_poco_server();
+        virtual ~cmsp_poco_server() {};
         virtual int init();
         virtual void start();
         virtual void stop();

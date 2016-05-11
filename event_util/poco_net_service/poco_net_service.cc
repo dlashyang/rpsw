@@ -21,13 +21,6 @@ void poco_srv_connection::run()
     socket().sendBytes(reply.data(), (int)reply.length());
 }
 
-cmsp_poco_server::~cmsp_poco_server()
-{
-    if (_dsp != NULL) {
-        delete _dsp;
-    }
-}
-
 int cmsp_poco_server::init()
 {
     int ret = 0;
