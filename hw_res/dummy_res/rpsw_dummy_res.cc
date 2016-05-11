@@ -38,8 +38,16 @@ int dummy_hw_res::init()
     read_data(_data_file+("_temp"), _temp);
     read_data(_data_file+("_vol"), _vol);
 
-    std::cout<<_temp.size()<<std::endl;
-    std::cout<<_vol.size()<<std::endl;
+    int t_num = _temp.size();
+    std::cout<<"We have temperature data for "<<
+        t_num/3600 <<":"<<(t_num%3600)/60<<":"<<t_num%60
+        <<std::endl;
+
+    int v_num = _vol.size();
+    std::cout<<"We have voltage data for "<<
+        v_num/3600 <<":"<<(v_num%3600)/60<<":"<<v_num%60
+        <<std::endl;
+
     return 0;
 }
 
@@ -53,7 +61,14 @@ int dummy_hw_res::get_card_status(uint32_t& card_status)
 int dummy_hw_res::get_volt_readout(uint8_t id, int32_t& readout)
 {
     Poco::Timestamp::TimeDiff elapsed=_start.elapsed();
-    readout=_vol[elapsed/1000000];
+
+    uint32_t idx = elapsed/1000000;
+    if (idx>=_vol.size()) {
+        std::cout<<"no valid data"<<std::endl;
+        return -1;
+    }
+
+    readout=_vol[idx];
 
     std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<readout<<std::endl;
 
@@ -63,7 +78,14 @@ int dummy_hw_res::get_volt_readout(uint8_t id, int32_t& readout)
 int dummy_hw_res::get_thermal_readout(uint8_t id, int32_t& readout)
 {
     Poco::Timestamp::TimeDiff elapsed=_start.elapsed();
-    readout=_temp[elapsed/1000000];
+    try {
+        readout=_temp.at(elapsed/1000000);
+    }
+    catch (const std::out_of_range& e){
+        std::cout<<"no valid data"<<std::endl;
+        return -1;
+    }
+
 
     std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<readout<<std::endl;
 
