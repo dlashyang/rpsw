@@ -8,6 +8,23 @@ simple_msg_dispatcher::~simple_msg_dispatcher()
     std::cout<<"~simple_msg_dispatcher"<<std::endl;
 }
 
+int simple_msg_dispatcher::register_hw(cmm_hw_res* p)
+{
+    if (p == NULL) {
+        std::cout<<"NULL hw_res pointer!"<<std::endl;
+        return -1;
+    }
+
+    _res = p;
+    return 0;
+}
+
+int simple_msg_dispatcher::deregister_hw()
+{
+    _res = NULL;
+    return 0;
+}
+
 int simple_msg_dispatcher::proc_msg(const std::string& msg, std::string& reply)
 {
     if (_res == NULL) {

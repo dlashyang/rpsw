@@ -22,7 +22,9 @@ int main()
     evnt_hdlr.start();
 #endif
 
-    std::auto_ptr<rpsw_msg_dispatcher> dsp(simple_msg_disp_factory(hw.get()).create_dispatcher());
+    std::auto_ptr<rpsw_msg_dispatcher> dsp(simple_msg_disp_factory().create_dispatcher());
+    dsp->register_hw(hw.get());
+
     std::auto_ptr<rpsw_event_server> evnt_srv(poco_server_factory(dsp.get()).create_server());
     evnt_srv->init();
     evnt_srv->start();
