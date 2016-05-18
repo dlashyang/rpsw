@@ -6,6 +6,10 @@
 
 class simple_msg_dispatcher: public rpsw_msg_dispatcher
 {
+    private:
+        simple_msg_dispatcher(const simple_msg_dispatcher&);
+        simple_msg_dispatcher& operator=(const simple_msg_dispatcher&);
+
     public:
         simple_msg_dispatcher():_res(NULL){};
         virtual ~simple_msg_dispatcher();

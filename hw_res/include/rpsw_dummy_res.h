@@ -17,6 +17,8 @@ class dummy_hw_res:public cmm_hw_res
         Poco::Timestamp _start;
 
         inline int read_data(const std::string& file, std::vector<int32_t>& data);
+        dummy_hw_res(const dummy_hw_res&);
+        dummy_hw_res& operator=(const dummy_hw_res&);
 
     public:
         dummy_hw_res(const std::string& file);

@@ -34,6 +34,10 @@ class poco_srv_con_factory: public Poco::Net::TCPServerConnectionFactory
 
 class cmsp_poco_server: public rpsw_event_server
 {
+    private:
+        cmsp_poco_server(const cmsp_poco_server&);
+        cmsp_poco_server& operator=(const cmsp_poco_server&);
+
     public:
         cmsp_poco_server(rpsw_msg_dispatcher* p, int port=9911):_srv(NULL),_dsp(p),_ss(port){};
         virtual ~cmsp_poco_server() {};
