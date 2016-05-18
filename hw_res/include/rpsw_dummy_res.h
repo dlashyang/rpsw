@@ -26,8 +26,8 @@ class dummy_hw_res:public cmm_hw_res
         int init();
 
         virtual int get_card_status(uint32_t& card_status);
-        virtual int get_volt_readout(uint8_t id, int32_t& readout);
-        virtual int get_thermal_readout(uint8_t id, int32_t& readout);
+        virtual int get_volt_readout(uint8_t id, readout& readout);
+        virtual int get_thermal_readout(uint8_t id, readout& readout);
 };
 
 class dummy_factory: public hw_res_factory

@@ -58,38 +58,46 @@ int dummy_hw_res::get_card_status(uint32_t& card_status)
     return 0;
 }
 
-int dummy_hw_res::get_volt_readout(uint8_t id, int32_t& readout)
+int dummy_hw_res::get_volt_readout(uint8_t id, readout& readout)
 {
+    int ret = 0;
+    int32_t v = 0;
+
     Poco::Timestamp::TimeDiff elapsed=_start.elapsed();
 
     uint32_t idx = elapsed/1000000;
     if (idx>=_vol.size()) {
         std::cout<<"no valid data"<<std::endl;
-        return -1;
+        ret = -1;
     }
 
-    readout=_vol[idx];
+    v =_vol[idx];
+    readout.set_value(v);
 
-    std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<readout<<std::endl;
+    std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<v<<std::endl;
 
-    return 0;
+    return ret;
 }
 
-int dummy_hw_res::get_thermal_readout(uint8_t id, int32_t& readout)
+int dummy_hw_res::get_thermal_readout(uint8_t id, readout& readout)
 {
+    int ret = 0;
+    int32_t v = 0;
+
     Poco::Timestamp::TimeDiff elapsed=_start.elapsed();
     try {
-        readout=_temp.at(elapsed/1000000);
+        v =_temp.at(elapsed/1000000);
     }
     catch (const std::out_of_range& e){
         std::cout<<"no valid data"<<std::endl;
-        return -1;
+        ret = -1;
     }
 
 
-    std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<readout<<std::endl;
+    readout.set_value(v/100);
+    std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<v<<std::endl;
 
-    return 0;
+    return ret;
 }
 
 dummy_hw_res::~dummy_hw_res()

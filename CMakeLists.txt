@@ -9,6 +9,7 @@ add_definitions(
 
 include_directories(
     include
+    readout
     msg_disp/include
     hw_res/include
     event_util/include
@@ -22,6 +23,7 @@ target_link_libraries(rpswd
     dummy_res 
     simple_msg_disp
     poco_srvc
+    readout
     ${poco_f} 
     )
 

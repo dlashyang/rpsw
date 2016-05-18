@@ -42,13 +42,17 @@ int simple_msg_dispatcher::proc_msg(const std::string& msg, std::string& reply)
         _res->get_card_status(card_stat);
         ss<<"Card Status is "<<card_stat;
     } else if (msg=="get voltage") {
-        int32_t vol=0;
-        _res->get_volt_readout(0, vol);
-        ss<<"Voltage is "<<vol;
+        readout vol(5);
+        for(int i=0; i<5; i++) {
+            _res->get_volt_readout(0, vol);
+        }
+        ss<<"Voltage is "<<vol.get_value();
     } else if (msg=="get temperature") {
-        int32_t temp=0;
-        _res->get_thermal_readout(0, temp);
-        ss<<"Temperature is "<<temp;
+        readout temp(3);
+        for (int i=0; i<3; i++) {
+            _res->get_thermal_readout(0, temp);
+        }
+        ss<<"Temperature is "<<temp.get_value();
     } else {
         std::cout<<"unknown message: "<<msg<<std::endl;
         ss<<"Unknown message!";

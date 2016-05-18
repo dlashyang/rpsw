@@ -16,6 +16,7 @@ class readout
     public:
         readout(size_t size): _size(size) {};
         int32_t get_value(int32_t& value) const;
+        int32_t get_value() const;
         int32_t set_value(int32_t value);
 
     private:

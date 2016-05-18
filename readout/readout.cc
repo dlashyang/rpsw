@@ -1,3 +1,5 @@
+#include <limits>
+
 #include "readout.h"
 
 int32_t readout::get_value(int32_t& value) const
@@ -11,6 +13,17 @@ int32_t readout::get_value(int32_t& value) const
     }
 
     return ret;
+}
+
+int32_t readout::get_value() const
+{
+    int32_t value = std::numeric_limits<int32_t>::max();
+
+    if (_test_flag_any()) {
+        value = _raw_data.front();
+    }
+
+    return value;
 }
 
 int32_t readout::set_value(int32_t value)

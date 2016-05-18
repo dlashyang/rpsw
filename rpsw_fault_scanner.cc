@@ -5,6 +5,7 @@
 #include "Poco/Net/SocketAddress.h"
 
 #include "rpsw_fault_scanner.h"
+#include "readout.h"
 
 rpsw_fault_scanner::~rpsw_fault_scanner()
 {
@@ -31,15 +32,17 @@ void rpsw_fault_scanner::run()
     Poco::Net::DatagramSocket socket;
     socket.connect(srv_addr);
 
+    readout t(1);
+    readout v(5);
+
     while(!_stop) {
-        int32_t temperature=0;
-        if (0 != _hw_res->get_thermal_readout(1, temperature)) {
+        if (0 != _hw_res->get_thermal_readout(1, t)) {
             std::cout<<"temperature read fault!"<<std::endl;
             std::string msg("temperature read fault!");
             socket.sendBytes(msg.data(), msg.size());
         } else {
-            temperature/=100;
-            if (temperature>150) {
+            //t.set_value(temperature/100);
+            if (t.get_value() > 150) {
                 std::cout<<"temperature fault!"<<std::endl;
                 std::string msg("temperature fault!");
                 socket.sendBytes(msg.data(), msg.size());
@@ -47,12 +50,13 @@ void rpsw_fault_scanner::run()
         }
 
         int32_t voltage=0;
-        if (0 != _hw_res->get_volt_readout(1, voltage)) {
+        if (0 != _hw_res->get_volt_readout(1, v)) {
             std::cout<<"voltage read fault!"<<std::endl;
             std::string msg("voltage read fault!");
             socket.sendBytes(msg.data(), msg.size());
         } else {
-            if (voltage>230 || voltage<210) {
+            int32_t ret = v.get_value(voltage);
+            if (ret !=0 || voltage>230 || voltage<210) {
                 std::cout<<"voltage fault!"<<std::endl;
                 std::string msg("voltage fault!");
                 socket.sendBytes(msg.data(), msg.size());
