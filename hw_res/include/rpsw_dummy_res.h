@@ -35,9 +35,9 @@ class dummy_factory: public hw_res_factory
     public:
         dummy_factory(std::string dummy_file): _file(dummy_file) {};
 
-        virtual cmm_hw_res* create_hw_res()
+        virtual cmm_hw_res_t create_hw_res()
         {
-            return (new dummy_hw_res(_file));
+            return (cmm_hw_res_t(new dummy_hw_res(_file)));
         }
 
     private:

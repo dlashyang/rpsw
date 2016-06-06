@@ -55,9 +55,9 @@ class poco_server_factory: public rpsw_server_factory
 {
     public:
         poco_server_factory(rpsw_msg_dispatcher* p):_dsp(p) {};
-        virtual rpsw_event_server* create_server()
+        virtual evnt_srv_t create_server()
         {
-            return (new cmsp_poco_server(_dsp));
+            return (evnt_srv_t(new cmsp_poco_server(_dsp)));
         };
 
     private:

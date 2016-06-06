@@ -24,9 +24,9 @@ class simple_msg_dispatcher: public rpsw_msg_dispatcher
 class simple_msg_disp_factory: public rpsw_msg_disp_factory
 {
     public:
-        virtual rpsw_msg_dispatcher* create_dispatcher()
+        virtual msg_disp_t create_dispatcher()
         {
-            return (new simple_msg_dispatcher());
+            return (msg_disp_t(new simple_msg_dispatcher()));
         };
 };
 
