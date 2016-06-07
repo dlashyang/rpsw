@@ -10,7 +10,6 @@ add_definitions(
 include_directories(
     include
     readout
-    msg_disp/include
     hw_res/include
     event_util/include
     )
@@ -28,6 +27,6 @@ target_link_libraries(rpswd
     )
 
 add_subdirectory(event_util/poco_net_service)
-add_subdirectory(msg_disp/simple_msg_disp)
+add_subdirectory(event_util/simple_msg_disp)
 add_subdirectory(hw_res/dummy_res)
 add_subdirectory(readout)
