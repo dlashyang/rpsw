@@ -14,9 +14,10 @@ include_directories(
     event_util/include
     )
 
-add_executable(rpswd rpswd.cc rpsw_fault_scanner.cc)
+add_executable(rpswd rpswd.cc rpsw_fault_scanner.cc rpswd_alarm_object.cc)
 
 find_library(poco_f PocoFoundation /usr/local)
+find_library(poco_p PocoJSON /usr/local)
 
 target_link_libraries(rpswd 
     dummy_res 
@@ -24,6 +25,7 @@ target_link_libraries(rpswd
     poco_srvc
     readout
     ${poco_f} 
+    ${poco_p} 
     )
 
 add_subdirectory(event_util/poco_net_service)

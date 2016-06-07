@@ -3,6 +3,7 @@
 
 #include "rpsw_fault_scanner.h"
 #include "rpsw_alarm_sender.h"
+#include "rpsw_alarm_object.h"
 #include "readout.h"
 
 rpsw_fault_scanner::~rpsw_fault_scanner()
@@ -35,25 +36,25 @@ void rpsw_fault_scanner::run()
 
     while(!_stop) {
         if (0 != _hw_res->get_thermal_readout(1, t)) {
-            std::cout<<"temperature read fault!"<<std::endl;
-            _sender->send("temperature read fault!");
+            rpsw_alarm_obj a("thermal");
+            _sender->send(a.to_json());
         } else {
             //t.set_value(temperature/100);
             if (t.get_value() > 150) {
-                std::cout<<"temperature fault!"<<std::endl;
-                _sender->send("temperature fault!");
+                rpsw_alarm_obj a("thermal", alarm_major, t.get_value());
+                _sender->send(a.to_json());
             }
         }
 
         int32_t voltage=0;
         if (0 != _hw_res->get_volt_readout(1, v)) {
-            std::cout<<"voltage read fault!"<<std::endl;
-            _sender->send("voltage read fault!");
+            rpsw_alarm_obj a("voltage");
+            _sender->send(a.to_json());
         } else {
             int32_t ret = v.get_value(voltage);
             if (ret !=0 || voltage>230 || voltage<210) {
-                std::cout<<"voltage fault!"<<std::endl;
-                _sender->send("voltage fault!");
+                rpsw_alarm_obj a("voltage", alarm_major, voltage);
+                _sender->send(a.to_json());
             }
         }
 
