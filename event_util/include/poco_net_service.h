@@ -5,8 +5,10 @@
 #include "Poco/Net/TCPServerConnectionFactory.h"
 #include "Poco/Net/TCPServer.h"
 #include "Poco/Net/StreamSocket.h"
+#include "Poco/Net/DatagramSocket.h"
 
 #include "rpsw_event_server.h"
+#include "rpsw_alarm_sender.h"
 #include "rpsw_msg_dispatcher.h"
 
 class poco_srv_connection: public Poco::Net::TCPServerConnection
@@ -62,6 +64,30 @@ class poco_server_factory: public rpsw_server_factory
 
     private:
         rpsw_msg_dispatcher* _dsp;
+};
+
+class poco_udp_sender: public rpsw_alarm_sender
+{
+    public:
+        poco_udp_sender(const std::string& srv_addr);
+        int send(const std::string& msg);
+
+    private:
+        Poco::Net::SocketAddress _srv_addr;
+        Poco::Net::DatagramSocket _socket;
+};
+
+class poco_sender_factory: public rpsw_sender_factory
+{
+    public:
+        poco_sender_factory(std::string srv): _srv_addr(srv) {};
+        virtual alarm_sender_t create_sender()
+        {
+            return (alarm_sender_t(new poco_udp_sender(_srv_addr)));
+        };
+
+    private:
+        std::string _srv_addr;
 };
 
 #endif //#ifndef POCO_TCP_SERVER_H

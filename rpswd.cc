@@ -21,7 +21,8 @@ int main()
     evnt_srv->init();
     evnt_srv->start();
 
-    rpsw_fault_scanner fault_scanner(hw.get());
+    alarm_sender_t sender = poco_sender_factory("127.0.0.1:19993").create_sender();
+    rpsw_fault_scanner fault_scanner(hw.get(), sender);
     fault_scanner.start();
 
     //for debug

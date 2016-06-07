@@ -51,3 +51,13 @@ void cmsp_poco_server::stop()
         _srv->stop();
     }
 }
+
+poco_udp_sender::poco_udp_sender(const std::string& srv_addr): _srv_addr(srv_addr)
+{
+    _socket.connect(_srv_addr);
+}
+
+int poco_udp_sender::send(const std::string& msg)
+{
+    return _socket.sendBytes(msg.data(), msg.size());
+}
