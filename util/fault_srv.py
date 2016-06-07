@@ -5,6 +5,7 @@ import time
 import socket
 import select
 import threading
+import json
 
 class name_server(object):
     def __init__(self,port=9003,buf_len=2048):
@@ -32,7 +33,10 @@ class name_server(object):
 
             if self.sock in r:
                 (data,addr) = self.sock.recvfrom(self.buf_len)
-                print ('msg from (%s:%s): %s' %(addr[0],addr[1],data))
+                a = json.loads(data)
+                print ('alarm received from (%s:%s):' %(addr[0],addr[1]))
+                print ('  [%s]: source [%s], readout[%d]'
+                        %(a['level'], a['detail']['source'], a['detail']['readout']))
 
     def close(self):
         self.stop = 1
