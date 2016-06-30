@@ -7,6 +7,7 @@
 #include <Poco/Timestamp.h>
 
 #include "rpsw_common_hw_res.h"
+#include "rpsw_log.h"
 
 class dummy_hw_res:public cmm_hw_res
 {
@@ -15,6 +16,7 @@ class dummy_hw_res:public cmm_hw_res
         std::vector<int32_t> _vol;
         std::string _data_file;
         Poco::Timestamp _start;
+        Poco::Logger& _log;
 
         inline int read_data(const std::string& file, std::vector<int32_t>& data);
         dummy_hw_res(const dummy_hw_res&);

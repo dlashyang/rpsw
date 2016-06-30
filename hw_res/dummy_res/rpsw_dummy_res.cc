@@ -5,7 +5,8 @@
 
 #include "rpsw_dummy_res.h"
 
-dummy_hw_res::dummy_hw_res(const std::string& file):_temp(0), _vol(0)
+dummy_hw_res::dummy_hw_res(const std::string& file):_temp(0), _vol(0),
+                                _log(Poco::Logger::get("rpswd.hw_res"))
 {
     _data_file = file;
 }
@@ -25,7 +26,7 @@ inline int dummy_hw_res::read_data(const std::string& file, std::vector<int32_t>
             data.push_back(atoi(readout.c_str()));
         }
     } else {
-        std::cout<<"read file failed: "<<file<<std::endl;
+        rpsw_critical(_log, "%s: read file failed!", std::string(__func__));
         return -1;
     }
 
@@ -39,14 +40,12 @@ int dummy_hw_res::init()
     read_data(_data_file+("_vol"), _vol);
 
     int t_num = _temp.size();
-    std::cout<<"We have temperature data for "<<
-        t_num/3600 <<":"<<(t_num%3600)/60<<":"<<t_num%60
-        <<std::endl;
+    rpsw_debug(_log, "We have temperature data for %d:%d:%d",
+            t_num/3600, (t_num%3600)/60, t_num%60);
 
     int v_num = _vol.size();
-    std::cout<<"We have voltage data for "<<
-        v_num/3600 <<":"<<(v_num%3600)/60<<":"<<v_num%60
-        <<std::endl;
+    rpsw_debug(_log, "We have voltage data for %d:%d:%d",
+            v_num/3600, (v_num%3600)/60, v_num%60);
 
     return 0;
 }
@@ -67,14 +66,14 @@ int dummy_hw_res::get_volt_readout(uint8_t id, readout& readout)
 
     uint32_t idx = elapsed/1000000;
     if (idx>=_vol.size()) {
-        std::cout<<"no valid data"<<std::endl;
+        rpsw_error(_log, "no valid data");
         ret = -1;
     }
 
     v =_vol[idx];
     readout.set_value(v);
 
-    std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<v<<std::endl;
+    rpsw_debug(_log, "Time is %ld, readout is %d", elapsed/1000000, v);
 
     return ret;
 }
@@ -89,18 +88,18 @@ int dummy_hw_res::get_thermal_readout(uint8_t id, readout& readout)
         v =_temp.at(elapsed/1000000);
     }
     catch (const std::out_of_range& e){
-        std::cout<<"no valid data"<<std::endl;
+        rpsw_error(_log, "no valid data");
         ret = -1;
     }
 
 
     readout.set_value(v/100);
-    std::cout<<"time is "<<(elapsed/1000000)<<", readout is "<<v<<std::endl;
+    rpsw_debug(_log, "Time is %ld, readout is %d", elapsed/1000000, v);
 
     return ret;
 }
 
 dummy_hw_res::~dummy_hw_res()
 {
-    std::cout<<"~dummy_hw_res"<<std::endl;
+    rpsw_trace(_log, std::string(__func__));
 }

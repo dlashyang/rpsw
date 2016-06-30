@@ -5,6 +5,7 @@
 #include "Poco/Runnable.h"
 #include "rpsw_common_hw_res.h"
 #include "rpsw_alarm_sender.h"
+#include "rpsw_log.h"
 
 class rpsw_fault_scanner : public Poco::Runnable
 {

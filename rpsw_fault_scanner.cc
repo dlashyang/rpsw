@@ -25,7 +25,7 @@ void rpsw_fault_scanner::stop()
 
 void rpsw_fault_scanner::run()
 {
-    std::cout<<"fault_scanner is running"<<std::endl;
+    rpsw_trace(Poco::Logger::get("rpswd.fault_scanner"), "fault_scanner is running");
 
     //Poco::Net::SocketAddress srv_addr("127.0.0.1:19993");
     //Poco::Net::DatagramSocket socket;

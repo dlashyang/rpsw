@@ -1,4 +1,5 @@
 #include "rpsw_alarm_object.h"
+#include "rpsw_log.h"
 #include "Poco/JSON/Object.h"
 
 rpsw_alarm_obj::rpsw_alarm_obj(const std::string& src):
@@ -23,7 +24,7 @@ std::string rpsw_alarm_obj::to_json()
 
     std::ostringstream output;
     alarm.stringify(output);
-    std::cout<<output.str()<<std::endl;
+    rpsw_debug(Poco::Logger::get("rpswd.alarm_obj"), output.str());
 
     return output.str();
 }
